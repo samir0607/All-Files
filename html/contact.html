@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Us-RSA</title>
+    <link rel="stylesheet" href="proscript.css">
+    <style>
+        body{
+            width: 100%;
+            background-image: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)),url(https://www.brabbu.com/en/inspiration-and-ideas/wp-content/uploads/2021/03/The-Most-Powerful-New-Delhi-Interior-Design-Projects-YELLOW-1.jpg);
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+
+<body>
+        <header>
+        <div class="navbar">
+        <h2>RSA</h2>
+        <ul>
+            <li><a href="PROJECT LAB.html">Home</a></li>
+            <li><a href="PROJECT LAB.html#interior">Interior</a></li>
+            <li><a href="PROJECT LAB.html#exterior">Exterior</a></li>
+            <li><a href="contact.html">Contact us</a></li>
+            <li><a href="about.html">About us</a></li>
+        </ul>
+        </header>
+        </div>
+        <div class="contact">
+            <h1>Contact Us</h1>
+            <div class="contact-form">
+                <form>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    
+                    <label for="email">Email:</label>
+                    <td><input type="text" id="email" name="email" required>
+                    
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                    
+                    <button type="submit" value="Submit"><span></span>Submit</button>
+                </form>
+                </div>
+                <div class="footer-contact">
+            <h3>Personal info</h3>
+                    <p><strong>Phone:</strong>+91-8471063414</p>
+                    <p><strong>Email:</strong> <a href="mailto:samir.gupta987@gmail.com">samir.gupta987@gmail.com</a></p>
+                    <p><strong>Address:</strong> Delhi Technological Univerity<br>Rohini, Delhi, 110042</p>
+                </div>
+            </div>
+        </div>
+        <div id="map"></div>
+        <script>
+            function initMap() {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: 28.38, lng: 77.12 },
+                    zoom: 14
+                });
+            }
+        </script>
+        <script src="https://maps.googleapis.com/maps" async defer></script>
+    </div>
+</body>
+</html>

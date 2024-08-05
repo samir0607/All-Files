@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button onclick="
+  document.querySelector('.js-result').innerHTML = `You chose: heads`;
+  ">Heads</button>
+  <button onclick="
+  document.querySelector('.js-result').innerHTML = `You chose: tails`;
+  ">Tails</button>
+  <p class="js-result"></p>
+  <script>
+    const product1 = {
+      name: 'basketball',
+      price: 2095,
+      'delivery-time' : '3 days'
+    };
+    const product2 = {
+      name: 'Tshirt',
+      price: 1095,
+      'delivery-time' : '3 days'
+    };
+    console.log(product1.price);
+    product1.price += 500;
+    console.log(product1.price);
+    console.log(product1['delivery-time']);
+    if(product1.price<product2.price){
+      console.log(`${product1.name} is cheaper`);
+    } else if(product1.price>product2.price){
+      console.log(`${product2.name} is cheaper`);
+    } else {
+      console.log(`${product1.name} and ${product2.name} are of same prize`);
+    }
+    const prod1 = JSON.stringify(product1);
+    const prod2 = JSON.stringify(product2);
+    console.log(prod1 === prod2)
+    console.log('Good Morning'.toLowerCase());
+  </script>
+</body>
+</html>

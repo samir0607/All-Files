@@ -1,0 +1,13 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/rahulgupta/Documents/Samir Gupta/DSA(2nd sem)/q12'
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _traversal, symObjAddr: 0x0, symBinAddr: 0x100003AF8, symSize: 0x70 }
+  - { offsetInCU: 0x3F, offset: 0x3F, size: 0x8, addend: 0x0, symName: _f, symObjAddr: 0xE48, symBinAddr: 0x100008000, symSize: 0x0 }
+  - { offsetInCU: 0x81, offset: 0x81, size: 0x8, addend: 0x0, symName: _r, symObjAddr: 0xE50, symBinAddr: 0x100008008, symSize: 0x0 }
+  - { offsetInCU: 0x98, offset: 0x98, size: 0x8, addend: 0x0, symName: _traversal, symObjAddr: 0x0, symBinAddr: 0x100003AF8, symSize: 0x70 }
+  - { offsetInCU: 0xBC, offset: 0xBC, size: 0x8, addend: 0x0, symName: _enqueue, symObjAddr: 0x70, symBinAddr: 0x100003B68, symSize: 0xB0 }
+  - { offsetInCU: 0xEE, offset: 0xEE, size: 0x8, addend: 0x0, symName: _dequeue, symObjAddr: 0x120, symBinAddr: 0x100003C18, symSize: 0x7C }
+  - { offsetInCU: 0x124, offset: 0x124, size: 0x8, addend: 0x0, symName: _reverseFirstK, symObjAddr: 0x19C, symBinAddr: 0x100003C94, symSize: 0x10C }
+  - { offsetInCU: 0x180, offset: 0x180, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x2A8, symBinAddr: 0x100003DA0, symSize: 0x128 }
+...

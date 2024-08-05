@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Gluten:wght@500&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+.banner{
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)),url(https://img.freepik.com/free-photo/minimal-amazing-interior-design_23-2150534586.jpg);
+    background-size: cover;
+    background-position: center;
+}
+h2{
+    color:#fff;
+    font-family: 'Gluten', cursive;
+    font-size: 45px;
+    text-shadow: -4px -2px 0px #009688;
+}
+.navbar{
+    width: 85%;
+    margin: auto;
+    padding: 35px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo{
+    width: 120px;
+    cursor: pointer;
+}
+.navbar ul li{
+    list-style: none;
+    display: inline-block;
+    margin: 0 20px;
+    position: relative;
+}
+.navbar ul li a{
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+}
+.navbar ul li::after{
+    content: '';
+    height: 3px;
+    width: 0;
+    background: #009688;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.5s;
+}
+.navbar ul li:hover::after{
+    width: 100%;
+}
+.content{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    color: #fff;
+}
+.content h1{
+    font-size: 70px;
+    margin-top: 80px;
+}
+.content p{
+    margin: 20px auto;
+    font-weight: 100;
+    line-height: 25px;
+}
+button{
+    width: 200px;
+    padding: 15px 0;
+    text-align: center;
+    margin: 20px  10px;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 2px solid #009688;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+span{
+    background: #009688;
+    height: 100%;
+    width: 0;
+    border-radius: 25px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    transition: 0.5s;
+}
+button:hover span{
+    width: 100%;
+}
+button:hover{
+    border: none;
+}
+.int{
+    display: flex;
+    align-items: center;
+}
+.int img{
+    flex: 1;
+    padding: 20px 80px;
+    width: 50%;
+    height: auto;
+    transition: 0.3s;
+}
+.int img:hover{
+    transform: scale(1.1);
+}
+.int p{
+    flex: 1;
+    padding: 0 50px 0 50px;
+    font-size: 20px;
+}
+.container{
+    text-align: center;
+}
+.container h2{
+    background: #009688;
+    color: #fff;
+    padding: 35px 0;
+}
+.container hr{
+    padding: 30px 0;
+    justify-content: center;
+}
+footer {
+    background-color: rgb(60, 74, 88); 
+    color: #fff;
+    padding: 20px 0;
+    font-size: 16px;
+}
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.footer-contact {
+    flex: 1;
+}
+.footer-links {
+    flex: 1;
+}
+.footer-social {
+    flex: 1
+}
+.social-links li {
+    margin-bottom: 5px;
+}
+.social-links a, .footer-links a, .footer-contact a{
+    color: #e16e6e;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.social-links a:hover ,.footer-links a:hover, .footer-contact a:hover{
+    color: #ff9900;
+}
+.contact {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 150px 0;
+    color:#ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    text-align: center;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.contact-info p {
+    flex: 1;
+    margin: 0;
+}
+.contact-form {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 5px;
+}
+label {
+    font-weight: bold;
+}
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+textarea {
+    height: 150px;
+}
+#map {
+    height: 300px;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #countrySelect {
+            font-size: 16px;
+            padding: 5px;
+        }
+
+        .capital {
+            font-weight: bold;
+            font-size: 20px;
+            color: blue;
+            display: none;
+        }
+
+        #usa:checked ~ #usaCapital,
+        #canada:checked ~ #canadaCapital,
+        #uk:checked ~ #ukCapital,
+        #france:checked ~ #franceCapital,
+        #germany:checked ~ #germanyCapital {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Country Capitals</h1>
+
+    <label for="countrySelect">Select a country:</label><br>
+    <input type="radio" name="country" id="usa">
+    <label for="usa">United States</label>
+    <span id="usaCapital" class="capital">Washington, D.C.</span><br>
+
+    <input type="radio" name="country" id="canada">
+    <label for="canada">Canada</label>
+    <span id="canadaCapital" class="capital">Ottawa</span><br>
+
+    <input type="radio" name="country" id="uk">
+    <label for="uk">United Kingdom</label>
+    <span id="ukCapital" class="capital">London</span><br>
+
+    <input type="radio" name="country" id="france">
+    <label for="france">France</label>
+    <span id="franceCapital" class="capital">Paris</span><br>
+
+    <input type="radio" name="country" id="germany">
+    <label for="germany">Germany</label>
+    <span id="germanyCapital" class="capital">Berlin</span><br>
+</body>
+</html>

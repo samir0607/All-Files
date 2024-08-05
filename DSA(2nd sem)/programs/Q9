@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX_SIZE 100
+typedef struct{
+    int data[MAX_SIZE];
+    int top;
+    int minStack[MAX_SIZE];
+    int minTop;
+}Stack;
+
+void initStack(Stack *s){
+    s->top = -1;
+    s->minTop = -1;
+}
+void push(Stack *s, int element){
+    if (s->top >= MAX_SIZE - 1){
+        printf("Stack overflow!\n");
+    return;
+    }
+    s->top++;
+    s->data[s->top] = element;
+    if (s->minTop == -1 || element <= s->minStack[s->minTop]) { 
+        s->minTop++;
+        s->minStack[s->minTop] = element;
+    }
+}
+
+int pop(Stack *s){
+    if (s->top < 0) {
+        printf("Stack underflow!\n");
+        return -1;
+    }
+int popped = s->data[s->top];
+    s->top--;
+    if (popped == s->minStack[s->minTop])
+        s->minTop--;
+    return popped;
+}
+int getMin(Stack *s) {
+    if (s->minTop >= 0)
+        return s->minStack[s->minTop];
+    else{
+        printf("Stack is empty!\n");
+        return -1;
+    }
+}
+
+
+int main(){
+    Stack s;
+    initStack(&s);
+    push(&s, 10);
+    push(&s, 5);
+    push(&s, 15);
+    push(&s, 3);
+    printf("Minimum element: %d\n", getMin(&s)); // Should print 3
+    pop(&s); // Pop the top element
+    pop(&s); // Pop the top element
+    printf("Minimum element: %d\n", getMin(&s)); // Should print 5 
+    return 0;
+}

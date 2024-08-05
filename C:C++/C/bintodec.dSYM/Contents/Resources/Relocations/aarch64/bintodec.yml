@@ -1,0 +1,9 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/rahulgupta/Documents/Podcasts/C/bintodec'
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _decimalToBinary, symObjAddr: 0x0, symBinAddr: 0x100003B4C, symSize: 0x144 }
+  - { offsetInCU: 0x41, offset: 0x41, size: 0x8, addend: 0x0, symName: _decimalToBinary, symObjAddr: 0x0, symBinAddr: 0x100003B4C, symSize: 0x144 }
+  - { offsetInCU: 0x9D, offset: 0x9D, size: 0x8, addend: 0x0, symName: _binaryToDecimal, symObjAddr: 0x144, symBinAddr: 0x100003C90, symSize: 0xA8 }
+  - { offsetInCU: 0xEB, offset: 0xEB, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x1EC, symBinAddr: 0x100003D38, symSize: 0x13C }
+...
