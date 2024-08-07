@@ -34,9 +34,9 @@ export function addToCart(productId){
       matchingItem.quantity += quantity;
     } else{
       cart.push({
-        productId,
-        quantity,
-        deliveryOptionId: null
+        productId: productId,
+        quantity: 1,
+        deliveryOptionId: '1'
       });
     }
 
@@ -96,7 +96,7 @@ xhr.addEventListener('load', () => {
   
   console.log(xhr.response);
 
-  fun(xhr.response);
+  fun();
 });
 
   xhr.open('GET', 'https://supersimplebackend.dev/cart');
