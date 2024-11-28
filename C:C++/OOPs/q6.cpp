@@ -6,14 +6,14 @@ class FriendFunc2;
 class FriendFunc1 {
   double n1, n2;
   public:
-  FriendFunc1(int a, int b) : n1(a), n2(b) {}
+  FriendFunc1(double a, double b) : n1(a), n2(b) {}
   friend double average(FriendFunc1, FriendFunc2);
 };
 
 class FriendFunc2 {
     double n3, n4, n5;
     public:
-    FriendFunc2(int c, int d, int e) : n3(c), n4(d), n5(e) {}
+    FriendFunc2(double c, double d, double e) : n3(c), n4(d), n5(e) {}
     friend double average(FriendFunc1, FriendFunc2);
 };
 
@@ -23,7 +23,7 @@ double average(FriendFunc1 f1, FriendFunc2 f2) {
 }
 
 int main() {
-    int a, b, c, d, e;
+    double a, b, c, d, e;
     cout << "Enter five different numbers:\n";
     cin >> a >> b >> c >> d >> e;
     FriendFunc1 obj1(a, b);

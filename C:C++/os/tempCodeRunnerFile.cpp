@@ -2,10 +2,6 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include <iomanip>
-#include <algorithm>
-#include <queue>
-#include <climits>
 
 using namespace std;
 
@@ -40,10 +36,10 @@ void readProcesses(const string& filename, vector<Process>& processes, int& disp
     }
 }
 
-pair<double, double> calculateFCFS(const vector<Process>& processes, int disp) {
+void calculateFCFS(const vector<Process>& processes, int disp) {
     int current_time = 0;
     vector<Process> proc = processes;
-    cout << "\nFCFS:\n\n" ;
+    cout << "FCFS:\n";
     
     double total_turnaround_time = 0;
     double total_waiting_time = 0;
@@ -51,7 +47,7 @@ pair<double, double> calculateFCFS(const vector<Process>& processes, int disp) {
     for (size_t i = 0; i < proc.size(); ++i) {
         Process& p = proc[i];
         current_time = max(current_time, p.arrive_time);
-        cout << "   T" << current_time + 1 << ": " << p.id << "(" << p.priority << ")\n";
+        cout << "T" << current_time + 1 << ": " << p.id << "(" << p.priority << ")\n";
         current_time += p.exec_size + disp; // Include DISP time
         p.turnaround_time = current_time - p.arrive_time;
         p.waiting_time = p.turnaround_time - p.exec_size;
@@ -61,18 +57,21 @@ pair<double, double> calculateFCFS(const vector<Process>& processes, int disp) {
         total_waiting_time += p.waiting_time;
     }
 
-    cout << "\nProcess\t\t\tTAT\t\t\tWT\n";
+    cout << "\nProcess\tTurnaround Time\tWaiting Time\n";
     for (const auto& p : proc) {
-        cout << p.id << "\t\t\t" << p.turnaround_time << "\t\t\t" << p.waiting_time << "\n";
+        cout << p.id << "\t" << p.turnaround_time << "\t\t" << p.waiting_time << "\n";
     }
 
-    return {total_turnaround_time / proc.size(), total_waiting_time / proc.size()};
+    // Calculate and display averages
+    cout << fixed << setprecision(2);
+    cout << "\nAverage Turnaround Time: " << (total_turnaround_time / proc.size()) << "\n";
+    cout << "Average Waiting Time: " << (total_waiting_time / proc.size()) << "\n\n";
 }
 
-pair<double, double> calculateSPN(const vector<Process>& processes, int disp) {
+void calculateSPN(const vector<Process>& processes, int disp) {
     vector<Process> proc = processes;
     int current_time = 0;
-    cout << "\nSPN:\n\n";
+    cout << "SPN:\n";
     
     double total_turnaround_time = 0;
     double total_waiting_time = 0;
@@ -91,7 +90,7 @@ pair<double, double> calculateSPN(const vector<Process>& processes, int disp) {
 
         if (idx != -1) {
             current_time = max(current_time, proc[idx].arrive_time);
-            cout << "   T" << current_time + 1 << ": " << proc[idx].id << "(" << proc[idx].priority << ")\n";
+            cout << "T" << current_time + 1 << ": " << proc[idx].id << "(" << proc[idx].priority << ")\n";
             current_time += proc[idx].exec_size + disp; // Include DISP time
             proc[idx].turnaround_time = current_time - proc[idx].arrive_time;
             proc[idx].waiting_time = proc[idx].turnaround_time - proc[idx].exec_size;
@@ -103,90 +102,89 @@ pair<double, double> calculateSPN(const vector<Process>& processes, int disp) {
         }
     }
 
- cout << "\nProcess\t\t\tTAT\t\t\tWT\n";
+    cout << "\nProcess\tTurnaround Time\tWaiting Time\n";
     for (const auto& p : proc) {
-        cout << p.id << "\t\t\t" << p.turnaround_time << "\t\t\t" << p.waiting_time << "\n";
+        cout << p.id << "\t" << p.turnaround_time << "\t\t" << p.waiting_time << "\n";
     }
 
-    return {total_turnaround_time / proc.size(), total_waiting_time / proc.size()};
+    // Calculate and display averages
+    cout << fixed << setprecision(2);
+    cout << "\nAverage Turnaround Time: " << (total_turnaround_time / proc.size()) << "\n";
+    cout << "Average Waiting Time: " << (total_waiting_time / proc.size()) << "\n\n";
 }
 
-pair<double, double> calculatePP(const vector<Process>& processes, int disp) {
-     vector<Process> proc = processes;
-    int current_time = 0;
-    cout << "\nPP:\n\n";
 
+void calculatePP(const vector<Process>& processes, int disp) {
+    vector<Process> proc = processes;
+    int current_time = disp;
+    cout << "PP:\n";
+    
     double total_turnaround_time = 0;
     double total_waiting_time = 0;
     vector<bool> completed(proc.size(), false);
 
-    int last_executed_idx = -1;
-
-    while (true)
-    {
+    while (true) {
         int idx = -1;
-        int min_priority = 5;  
-        for (int i = 0; i < proc.size(); i++)
-        {
-            if (!completed[i] && proc[i].arrive_time <= current_time)
-            {
-                if (idx == -1 || proc[i].priority < min_priority || 
-                    (proc[i].priority == min_priority && proc[i].remaining_time < proc[idx].remaining_time))
-                {
+        int min_priority = 6;
+
+        // Find the highest priority process that has arrived
+        for (int i = 0; i < proc.size(); i++) {
+            // Check if the process has arrived and has not been completed
+            if (!completed[i] && proc[i].arrive_time <= current_time-disp) {
+                // If process has the same priority, check IDs to break tie
+                if (idx == -1 || 
+                    (proc[i].priority < min_priority) || 
+                    (proc[i].priority == min_priority && proc[i].arrive_time < proc[idx].arrive_time)) {
                     idx = i;
                     min_priority = proc[i].priority;
                 }
             }
         }
-        if (idx == -1)
-        {
-            int next_arrival = INT_MAX;
-            for (int i = 0; i < proc.size(); i++)
-            {
-                if (!completed[i] && proc[i].arrive_time > current_time)
-                {
-                    next_arrival = min(next_arrival, proc[i].arrive_time);
-                }
+
+        if (idx == -1) break;
+
+        // Execute the current process until a new process arrives or it finishes
+        int next_arrival_time = INT_MAX;
+        for (int i = 0; i < proc.size(); i++) {
+            if (!completed[i] && proc[i].arrive_time > current_time) {
+                next_arrival_time = min(next_arrival_time, proc[i].arrive_time);
             }
-            if (next_arrival == INT_MAX) break;
-            current_time = next_arrival;
-            continue;
-        }
-        // If we're switching to a different process, account for dispatcher time
-        if (last_executed_idx != idx) {
-            current_time += disp;
-            cout << "T" << current_time << ": " << proc[idx].id << "(" << proc[idx].priority << ")\n";
         }
 
-        // Execute the process for 1 unit of time (preemption check after every unit)
-        current_time++;
-        proc[idx].remaining_time--;
+        // Calculate the execution time (until the next process arrives or the current process completes)
+        int execution_time = min(proc[idx].exec_size, next_arrival_time - current_time);
+        if (execution_time <= 0) execution_time = proc[idx].exec_size;
 
-        // If the process finishes
-        if (proc[idx].remaining_time == 0)
-        {
+        cout << "T" << current_time << ": " << proc[idx].id << "(" << proc[idx].priority << ")\n";
+        
+        current_time += execution_time;
+        proc[idx].exec_size -= execution_time;
+
+        // If the process is done
+        if (proc[idx].exec_size == 0) {
             proc[idx].turnaround_time = current_time - proc[idx].arrive_time;
-            proc[idx].waiting_time = proc[idx].turnaround_time - proc[idx].exec_size;
+            proc[idx].waiting_time = proc[idx].turnaround_time - proc[idx].remaining_time;
             total_turnaround_time += proc[idx].turnaround_time;
             total_waiting_time += proc[idx].waiting_time;
             completed[idx] = true;
         }
-        last_executed_idx = idx;
+        current_time += disp;
     }
 
-    cout << "\nProcess\t\t\tTAT\t\t\tWT\n";
-    for (const auto &p : proc)
-    {
-        cout << p.id << "\t\t\t" << p.turnaround_time << "\t\t\t" << p.waiting_time << "\n";
+    cout << "\nProcess\tTurnaround Time\tWaiting Time\n";
+    for (const auto& p : proc) {
+        cout << p.id << "\t" << p.turnaround_time << "\t\t" << p.waiting_time << "\n";
     }
-    return {total_turnaround_time / proc.size(), total_waiting_time / proc.size()};
+
+    // Calculate and display averages
+    cout << fixed << setprecision(2);
+    cout << "\nAverage Turnaround Time: " << (total_turnaround_time / proc.size()) << "\n";
+    cout << "Average Waiting Time: " << (total_waiting_time / proc.size()) << "\n\n";
 }
-
-
-pair<double, double> calculatePRR(vector<Process>& processes, int disp) {
+void calculatePRR(vector<Process>& processes, int disp) {
     vector<Process> proc = processes;
     int current_time = disp;
-    cout << "\nPRR:\n\n";
+    cout << "PRR:\n";
     
     double total_turnaround_time = 0;
     double total_waiting_time = 0;
@@ -204,7 +202,7 @@ pair<double, double> calculatePRR(vector<Process>& processes, int disp) {
                 int quantum = (proc[i].priority <= 2) ? 4 : 2;
 
                 // Output process execution
-                cout << "   T" << current_time << ": " << proc[i].id << "(" << proc[i].priority << ")\n";
+                cout << "T" << current_time << ": " << proc[i].id << "(" << proc[i].priority << ")\n";
 
                 // Execute for the minimum of quantum or remaining time
                 int exec_time = min(quantum, proc[i].remaining_time);
@@ -219,9 +217,7 @@ pair<double, double> calculatePRR(vector<Process>& processes, int disp) {
                 }
 
                 // Only add DISP time if there is a context switch needed
-                if (completed_count < n) {
-                    current_time += disp;
-                }
+                current_time += disp;
             }
         }
 
@@ -229,44 +225,31 @@ pair<double, double> calculatePRR(vector<Process>& processes, int disp) {
         if (!found_process) {
             current_time++;
         } 
-    }
+}
 
     // Output the results
-    cout << "\nProcess\t\t\tTAT\t\t\tWT\n";
+    cout << "\nProcess\tTurnaround Time\tWaiting Time\n";
     for (const auto& p : proc) {
-        cout << p.id << "\t\t\t" << p.turnaround_time << "\t\t\t" << p.waiting_time << "\n";
+        cout << p.id << "\t" << p.turnaround_time << "\t\t" << p.waiting_time << "\n";
         total_turnaround_time += p.turnaround_time;
         total_waiting_time += p.waiting_time;
     }
 
-    return {total_turnaround_time / n, total_waiting_time / n};
-}
-
-
-void schedulingDisplay(vector<Process>& processes, int disp) {
-    auto fcfs = calculateFCFS(processes, disp);
-    auto spn = calculateSPN(processes, disp);
-    auto pp = calculatePP(processes, disp);
-    auto prr = calculatePRR(processes, disp);
-    cout << "\nSummary\n";
-    cout << "Algorithm\t\tAverage TAT\t\tAverage WT\n";
-    cout << "FCFS\t\t\t" << fixed << setprecision(2) << fcfs.first << "\t\t\t" << fixed << setprecision(2) << fcfs.second << "\n";
-    cout << "SPN\t\t\t" << fixed << setprecision(2) << spn.first << "\t\t\t" << fixed << setprecision(2) << spn.second << "\n";
-    cout << "PP\t\t\t" << fixed << setprecision(2) << pp.first << "\t\t\t" << fixed << setprecision(2) << pp.second << "\n";
-    cout << "PRR\t\t\t" << fixed << setprecision(2) << prr.first << "\t\t\t" << fixed << setprecision(2) << prr.second << "\n";
+    // Calculate and display averages
+    cout << fixed << setprecision(2);
+    cout << "\nAverage Turnaround Time: " << (total_turnaround_time / n) << "\n";
+    cout << "Average Waiting Time: " << (total_waiting_time / n) << "\n\n";
 }
 
 int main() {
     vector<Process> processes;
-
     int disp = 0;
-    string input;
+    readProcesses("datafile2.txt", processes, disp);
 
-    cout << "Enter file name(eg. datafile1.txt): ";
-    cin >> input;
-
-    readProcesses(input, processes, disp);
-    schedulingDisplay(processes, disp);
+    calculateFCFS(processes, disp);
+    calculateSPN(processes, disp);
+    calculatePP(processes, disp);
+    calculatePRR(processes, disp);
 
     return 0;
 }
