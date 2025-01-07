@@ -7,7 +7,7 @@ import javax.sound.sampled.Clip;
 public class App {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
-        File file = new File("Audio/call_me.wav");
+        File file = new File("call_me.wav");
         AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
         Clip clip = AudioSystem.getClip();
         clip.open(audioStream);
