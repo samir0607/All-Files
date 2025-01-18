@@ -4,50 +4,40 @@
 #include <utility>
 using namespace std;
 
-struct PairHash {
-    size_t operator()(const pair<int, int>& p) const {
-        return hash<int>()(p.first) ^ hash<int>()(p.second);
-    }
-};
-
-void solve() {
-    int n, m;
-    int res = 0;
-    cin >> n >> m;
-    int X = 0, Y = 0;
-    unordered_set<pair<int, int>, PairHash> cell;
-
-    for (int i = 1; i <= n; i++) {
-        int x, y;
-        cin >> x >> y;
-        for (int j = 0; j < m; j++) {
-            for (int k = 0; k < m; k++) {
-                cell.emplace(X + x + j, Y + y + k);
-            }
-        }
-        X += x;
-        Y += y;
-    }
-
-    for (const auto& p : cell) {
-        int x = p.first, y = p.second;
-        int cnt = 0;
-        if (cell.count(make_pair(x + 1, y))) cnt++;
-        if (cell.count(make_pair(x - 1, y))) cnt++;
-        if (cell.count(make_pair(x, y + 1))) cnt++;
-        if (cell.count(make_pair(x, y - 1))) cnt++;
-        res += 4 - cnt;
-    }
-
-    cout << res << endl;
-}
-
 int main() {
     int t;
     cin >> t;
-
     while (t--) {
-        solve();
+        int n, m;
+        cin >> n >> m;
+        int total_perimeter = 4 * m * n;
+        vector<pair<int, int > > given(n);
+
+
+        for (int i = 0; i < n; i++) {
+            int x, y;
+            cin >> x >> y;
+            if (i == 0) {
+                given [i].first = x;
+                given [i].second = y;
+            } else {
+                given [i].first = x + given [i - 1].first;
+                given [i].second = y + given [i - 1].second;
+            }
+        }
+        vector<pair<int, int> >corner(n);
+        for (int i = 0; i < n; i++) {
+            corner [i].first = given [i].first + m;
+            corner [i].second = given [i].second + m;
+        }
+        int extraLength = 0;
+        for (int i = 0; i < n - 1; i++) {
+            int dx = abs(corner [i].first - given [i + 1].first);
+            int dy = abs(corner [i].second - given [i + 1].second);
+            extraLength += 2 * (dx + dy);
+        }
+        int ans = total_perimeter - extraLength;
+        cout << ans << endl;
     }
 
     return 0;
