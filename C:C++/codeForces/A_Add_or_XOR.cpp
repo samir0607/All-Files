@@ -27,14 +27,14 @@ void solve() {
 }
 
 int main() {
-		fast_io;
+	fast_io;
 
-		int t;
-		cin >> t;
+	int t;
+	cin >> t;
 
-		while (t--) {
-				solve();
-		}
+	while (t--) {
+		solve();
+	}
 
-		return 0;
+	return 0;
 }
