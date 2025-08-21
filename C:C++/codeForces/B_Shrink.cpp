@@ -23,6 +23,7 @@ void solve() {
 	cout << endl;
 }
 
+
 int main() {
 	fast_io;
 	int t;
